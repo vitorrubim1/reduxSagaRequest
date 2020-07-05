@@ -24,17 +24,18 @@ import githubImage from './assets/gitImage.svg';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import SearchIcon from '@material-ui/icons/Search';
+import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
-    margin: '3vh auto auto'
+    margin: '2vh auto auto'
   },
   rootInput: {
     display: 'flex',
     alignItems: 'center',
-    maxWidth: 345,
+    maxWidth: 400,
     margin: '5vh auto auto'
   },
   expand: {
@@ -67,8 +68,12 @@ const useStyles = makeStyles((theme) => ({
   },
   imgGit: {
     margin: 'auto auto',
+    marginTop: '3vh',
     height: '100px',
     width: '100px',
+  },
+  rootPagination:{
+    maxWidth: 370,
   }
 }));
 
@@ -78,6 +83,11 @@ export default function RecipeReviewCard() {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
   };
 
   return (
@@ -134,7 +144,7 @@ export default function RecipeReviewCard() {
             <ExpandMoreIcon /> 
           </IconButton>
           <Typography variant="body2" color="textSecondary">
-            Repositórios
+            Repositories
           </Typography>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -153,16 +163,10 @@ export default function RecipeReviewCard() {
           />
         </ListItem>
         <Divider variant="inset" component="li" />
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            primary="googleChart"
-            secondary={
-              <React.Fragment>
-                {" grafico interativo usando uma biblioteca do google e o framework material ui"}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
+
+        <Box className={classes.rootPagination}>
+           <Pagination count={10} page={page} onChange={handleChange} />
+        </Box>        
       </List>
           </CardContent>
         </Collapse>
